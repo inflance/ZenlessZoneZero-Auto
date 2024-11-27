@@ -102,7 +102,7 @@ def action():
 
 
 # 高坂对话
-@task.page(name="高坂对话", target_texts=["高坂"])
+@task.page(name="高坂对话", target_texts=[r"供货商|我看到了|您记得|高|坂"])
 def action(positions: Dict[str, Position]):
     for i in range(5):
         control.press("space", duration=0.1)

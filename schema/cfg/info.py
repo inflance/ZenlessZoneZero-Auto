@@ -30,6 +30,7 @@ char_list = [
     "安比",
     "可琳",
     "安东",
+    "星见雅",
 ]
 
 zero_cfg = load_config("zero.yaml", ZeroConfig)  # 零号空洞配置信息

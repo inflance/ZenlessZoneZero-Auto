@@ -19,13 +19,13 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QPainter, QPainterPath, QImage, QFont
 
-from .components import LinkCardView, TaskCardView
+from .components import LinkCardView, TaskCardView, TaskControlCard
 from PIL import Image
 
 import numpy as np
 
 from .init_cfg import home_img_path
-from start_task import start_task
+from start_task import start_task, set_task_control_card
 
 
 class BannerWidget(QWidget):
@@ -146,6 +146,13 @@ class HomeInterface(ScrollArea):
         # 添加横幅小组件
         banner = BannerWidget(self)
         self.vBoxLayout.addWidget(banner)
+
+        # 添加任务控制组件
+        self.task_control_card = TaskControlCard(self.view)
+        self.vBoxLayout.addWidget(self.task_control_card)
+        
+        # 设置全局任务控制卡片引用
+        set_task_control_card(self.task_control_card)
 
         # 添加功能组件
         task_card_view = TaskCardView(self.tr("任务 >"), self.view)

@@ -28,6 +28,25 @@ class MainWindow(MSFluentWindow):
         self.init_navigation()
         # # 检查更新
         # check_update()
+    
+    def closeEvent(self, event):
+        """窗口关闭事件处理"""
+        # 停止所有正在运行的任务
+        from utils.task import task_zero, task_money, task_fight, task_daily, task_code
+        from start_task import task_control_card
+        
+        tasks = [task_zero, task_money, task_fight, task_daily, task_code]
+        for task in tasks:
+            if hasattr(task, '_running') and task._running:
+                task.stop()
+        
+        # 重置任务控制卡片状态
+        if task_control_card:
+            task_control_card.reset_ui_state()
+        
+        # 接受关闭事件
+        event.accept()
+        super().closeEvent(event)
 
     def init_ui(self):
         self.setWindowIcon(QIcon(str(app_icon)))

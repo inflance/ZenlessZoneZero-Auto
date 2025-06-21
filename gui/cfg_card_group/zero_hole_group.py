@@ -28,6 +28,7 @@ class ZeroHoleGroup(SettingCardGroup):
         self.card6 = None
         self.card7 = None
         self.card8 = None
+        self.card9 = None
         self.init_card()
         self.init_layout()
 
@@ -93,6 +94,14 @@ class ZeroHoleGroup(SettingCardGroup):
             5,
             (350, 40),
         )
+        # GPU加速开关
+        self.card9 = ModeSelectCard(
+            "use_gpu",
+            FluentIcon.SPEED_HIGH,
+            self.tr("启用GPU加速(OCR)"),
+            index=zero_cfg.useGpu,
+            texts=["否", "是"],
+        )
 
     def init_layout(self):
         self.addSettingCard(self.card1)
@@ -103,6 +112,7 @@ class ZeroHoleGroup(SettingCardGroup):
         self.addSettingCard(self.card6)
         self.addSettingCard(self.card7)
         self.addSettingCard(self.card8)
+        self.addSettingCard(self.card9)
 
     # 更新当前参数值
     def update(self):
@@ -118,4 +128,8 @@ class ZeroHoleGroup(SettingCardGroup):
         zero_cfg.maxFightTime = self.card6.get_value()
         zero_cfg.maxFightCount = self.card7.get_value()
         zero_cfg.selBuff = self.card8.get_value()
+        if self.card9.comboBox.currentIndex():
+            zero_cfg.useGpu = True
+        else:
+            zero_cfg.useGpu = False
         save_config("zero.yaml", zero_cfg)

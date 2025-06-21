@@ -6,8 +6,10 @@
 """
 from .link_card import LinkCardView
 from .task_card import TaskCardView
+from .task_control_card import TaskControlCard
 
 __all__ = [
     "LinkCardView",
     "TaskCardView",
+    "TaskControlCard",
 ]

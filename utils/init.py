@@ -25,10 +25,12 @@ def is_admin():
         return ctypes.windll.shell32.IsUserAnAdmin() != 0
 
 
-if not is_admin():
-    logger.error("请以管理员权限运行此程序")
-    input("按任意键退出...")
-    sys.exit(0)
+# 临时注释掉管理员权限检查，以便测试程序
+# if not is_admin():
+#     logger.error("请以管理员权限运行此程序")
+#     input("按任意键退出...")
+#     sys.exit(0)
+logger.warning("注意：程序未以管理员权限运行，某些功能可能无法正常工作")
 logger.debug("初始化utils模块中")
 RootPath = Path(__file__).parent.parent
 log_path = RootPath / "logs"

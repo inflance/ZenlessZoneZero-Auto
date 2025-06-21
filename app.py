@@ -26,6 +26,7 @@ sys.path.append(str(Path(__file__).parent))  # 将当前目录添加到 sys.path
 
 
 import sys
+import os
 from PySide6.QtWidgets import QApplication
 from gui.main_window import MainWindow
 
@@ -34,4 +35,22 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     w = MainWindow()
     w.show()
-    sys.exit(app.exec())
+    
+    try:
+        exit_code = app.exec()
+    except KeyboardInterrupt:
+        exit_code = 0
+    finally:
+        # 确保所有线程都被终止
+        try:
+            # 停止所有任务
+            from utils.task import task_zero, task_money, task_fight, task_daily, task_code
+            tasks = [task_zero, task_money, task_fight, task_daily, task_code]
+            for task in tasks:
+                if hasattr(task, '_running') and task._running:
+                    task.stop()
+        except Exception as e:
+            print(f"清理任务时发生错误: {e}")
+        
+        # 强制退出
+        os._exit(exit_code)
